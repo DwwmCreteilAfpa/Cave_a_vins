@@ -11,11 +11,10 @@
       <th scope="col">Contenance</th>
       <th scope="col">Robe</th>
       <th scope="col">Stock</th>
-      <th></th>
+      <th scope="col">Remarques</th>
     </tr>
   </thead>
   <tbody>
-    {% for vin in vins %}
         <tr>
         <th>{{ vin.region.nom }}</th>
         <th scope="row">{{ vin.nom }}</th>
@@ -23,9 +22,8 @@
         <td>{{ vin.contenance }}</td>
         <td>{{ vin.robe }}</td>
         <td>{{ vin.qttStock }}</td>
-        <td><a class="btn btn-secondary" href="{{ path('vin.show', {id: vin.id}) }}">Voir</a></td>
+        <td>{{ vin.remarques }}</td>
         </tr>
-    {% endfor %}
   </tbody>
 </table>
 
