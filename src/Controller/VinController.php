@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Vin;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
+
 
 class VinController extends AbstractController
 {
@@ -30,6 +32,7 @@ class VinController extends AbstractController
 
     // }
 
+  
     #[Route('/vin/show/{id}', name: 'vin.show')]
     public function show(Vin $vin): Response
     {

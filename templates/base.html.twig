@@ -24,12 +24,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{{ path('vin.list') }}">Gérer le stock</a>
+                    <a class="nav-link" aria-current="page" href="{{ path('vin.list') }}">Gérer le stock</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">gérer les régions</a>
+                    <a class="nav-link" href="{{ path('region_index') }}">gérer les régions</a>
                 </li>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('user.new') }}">Nouveau client</a>
+                </li>
+            {% endif %}
                 <li class="nav-item">
                 <a class="nav-link" href="#">A propos</a>
                 </li>
