@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des utilisateurss</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                {#% set listRole = '' %}
+                {% for role in user.roles %}
+                    {% set listRole = listRole ~ role ~ ' , ' %}
+                {% endfor %#}
+                <!--td>{#{ listRole }#}</td-->
+                <td>
+                {% for role in user.roles  %}
+                    {{ role }},
+                {% endfor %}
+                </td>
+                <td>
+                    <a class="btn btn-secondary" href="">voir</a>
+                    <a class="btn btn-secondary" href="{{ path('user.edit', {'id' : user.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas d'ulisateurs dans la base</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('user.new') }}">Nouvel utilisateur</a>
+{% endblock %}

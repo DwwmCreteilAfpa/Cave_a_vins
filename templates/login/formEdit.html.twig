@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Modification d'un user</h1>
+    <br>
+
+    <form method="post">
+        <label for="idEmail" class="form-label">Email : </label>
+        <input type="text" class="form-control" id="idEmail" name="email" value="{{ user.email }}"/>
+        <br>
+        <button type="submit">Valider</button>
+    </form>
+
+{% endblock %}

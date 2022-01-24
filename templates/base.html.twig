@@ -34,7 +34,7 @@
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user.new') }}">Nouveau client</a>
+                    <a class="nav-link" href="{{ path('user.list') }}">Gérer les clients</a>
                 </li>
             {% endif %}
                 <li class="nav-item">
@@ -43,7 +43,13 @@
             </ul>
             </div>
         </div>
-        </nav>    
+        </nav> 
+        {% for message in app.flashes('notif') %}
+            <div class="flash-notice alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}   
+   
         <div class="container">
             {% block body %}{% endblock %}
         </div>

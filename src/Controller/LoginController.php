@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,4 +59,49 @@ class LoginController extends AbstractController
 
         return $this->renderForm('login/formNew.html.twig', ['formNew' => $form]);
     }
+
+    #[Route('/user/list', name: 'user.list')]
+    public function list(UserRepository $repo): Response
+    {
+        $users = $repo->findAll();
+
+        return $this->render('login/list.html.twig', [
+            'users' => $users
+        ]);
+    }
+
+    // #[Route('user/{id}/edit', name: 'user.edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    // {
+    //     dump($user);
+    //     $form = $this->createForm(UserType::class, $user);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('login/formNew.html.twig', [
+    //         'formNew' => $form,
+    //     ]);
+    // }
+
+    #[Route('user/{id}/edit', name: 'user.edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($request->getMethod() === 'POST') {
+            $email = $request->get('email');
+            if ($email !== $user->getEmail()) {
+               $user->setEmail($email);
+               $entityManager->flush();
+            }
+            return $this->redirectToRoute('user.list');
+        }
+        return $this->renderForm('login/formEdit.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
 }

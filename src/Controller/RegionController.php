@@ -74,6 +74,8 @@ class RegionController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$region->getId(), $request->request->get('_token'))) {
             $entityManager->remove($region);
             $entityManager->flush();
+        } else {
+            $this->addFlash('notif', 'jetom CSRF invalide');
         }
 
         return $this->redirectToRoute('region_index', [], Response::HTTP_SEE_OTHER);
