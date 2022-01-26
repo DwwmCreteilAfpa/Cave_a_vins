@@ -19,6 +19,7 @@ class VinRepository extends ServiceEntityRepository
         parent::__construct($registry, Vin::class);
     }
 
+
     // /**
     //  * @return Vin[] Returns an array of Vin objects
     //  */
