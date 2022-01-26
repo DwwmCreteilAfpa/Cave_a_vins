@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Vin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +21,41 @@ class VinRepository extends ServiceEntityRepository
         parent::__construct($registry, Vin::class);
     }
 
+    public function stock(): array
+    {
+        $stocks = [];
+        $stocks['total'] = $this->nbrVinEnCave();
+        $stocks['blanc'] = $this->nbrVinEnCaveByRobe('blanc');
+        $stocks['rouge'] = $this->nbrVinEnCaveByRobe('rouge');
+        $stocks['rose'] = $this->nbrVinEnCaveByRobe('rosé');
+        //dd($stocks);
+        return $stocks;
+    }
+
+    public function nbrVinEnCave(): int
+    {
+        $stock = $this->createQueryBuilder('v')
+            ->select('SUM(v.qtt_stock) as nbr')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+        //dd($stock);
+        return $stock;
+    }
+
+    public function nbrVinEnCaveByRobe($robe): ?int
+    {
+        $stock = $this->createQueryBuilder('v')
+            ->select('SUM(v.qtt_stock) as nbr')
+            ->where('v.robe = :robe')
+            ->setParameter('robe', $robe)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+        //$stock = ($stock == null)? 0 : $stock;
+        //dd($stock);
+        return ($stock == null)? 0 : $stock;
+    }
 
     // /**
     //  * @return Vin[] Returns an array of Vin objects

@@ -17,6 +17,7 @@ class VinController extends AbstractController
     #[Route('/vin/list', name: 'vin.list')]
     public function list(VinRepository $vinRepository): Response
     {
+        //$vins = $vinRepository->findBy([], ['qtt_stock' => 'ASC']);
         $vins = $vinRepository->findAll();
 //dump($vins);
         return $this->render('vin/list.html.twig', [
