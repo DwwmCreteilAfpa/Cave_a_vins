@@ -8,9 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class HomeController extends AbstractController
 {
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    
     #[Route('/', name: 'home')]
     public function home(VinRepository $repo): Response
     {
@@ -27,4 +28,5 @@ class HomeController extends AbstractController
             // 'stock_rose' => $stockRose,
         ]);
     }
+
 }

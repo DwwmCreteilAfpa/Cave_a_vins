@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class LoginController extends AbstractController
 {
@@ -35,7 +37,7 @@ class LoginController extends AbstractController
     }
 
     #[Route('/user/new', name: 'user.new')]
-    public function new(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em) : Response
+    public function new(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em, MailerInterface $mailer) : Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -53,9 +55,11 @@ class LoginController extends AbstractController
             dump($user);
             $em->persist($user);
             $em->flush();
+
+            $this->sendEmail($mailer, $user);
+
             return $this->redirectToRoute('user.new');
         }
-
 
         return $this->renderForm('login/formNew.html.twig', ['formNew' => $form]);
     }
@@ -103,5 +107,23 @@ class LoginController extends AbstractController
             'user' => $user,
         ]);
     }
+    
+    private function sendEmail(MailerInterface $mailer, User $user): void
+    {
+        $email = (new Email())
+            ->from($this->getUser()->getEmail())
+            ->to($user->getEmail())
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Votre compte sur "La Cave à vins"')
+            ->text('Votre compte à bien été créé !')
+            ->html('<h4>Votre compte à bien été créé !</h4>');
 
+        $mailer->send($email);
+
+        $this->addFlash('notice', 'Votre mail a bien été envoyé');
+
+    }
 }
