@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 20 jan. 2022 à 17:15
+-- Généré le : jeu. 27 jan. 2022 à 08:32
 -- Version du serveur :  10.4.18-MariaDB
 -- Version de PHP : 8.0.3
 
@@ -64,7 +64,8 @@ CREATE TABLE `region` (
 INSERT INTO `region` (`id`, `nom`) VALUES
 (1, 'Bordeaux'),
 (2, 'Anjou'),
-(3, 'Bourgogne');
+(3, 'Bourgogne'),
+(4, 'Alsace');
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`) VALUES
 (1, 'admin@dwwm.fr', '[\"ROLE_ADMIN\"]', '$2y$13$5UT4UpgEVJGLGGw1b28z3u.MgiCw.sMNp.FK2o1IV4it8W/ZnBGDK'),
-(2, 'client01@gmail.com', '[\"ROLE_CLIENT\"]', '$2y$13$yunvhL78SEAwWjtVBr0KSOGBU2/L9onEgwq2T1k7OjD7KCaYsF0wi'),
+(2, 'client01@dwwm.fr', '[\"ROLE_CLIENT\"]', '$2y$13$yunvhL78SEAwWjtVBr0KSOGBU2/L9onEgwq2T1k7OjD7KCaYsF0wi'),
 (3, 'client02@gmail.com', '[\"ROLE_CLIENT\"]', '$2y$13$/HZbSagwX.P3FVD3yOyPfexeQW1Vdsj3IWf4o23FJVhmkPajx7Yxi');
 
 -- --------------------------------------------------------
@@ -111,7 +112,9 @@ CREATE TABLE `vin` (
 
 INSERT INTO `vin` (`id`, `nom`, `millesime`, `robe`, `qtt_stock`, `contenance`, `remarques`, `region_id`) VALUES
 (1, 'Bonnezeau', 2015, 'blanc', 5, '75cl', NULL, 2),
-(2, 'Chateau Dwwm', 2020, 'rouge', 2, '75cl', 'Vin de garde', 1);
+(2, 'Chateau Dwwm', 2020, 'rouge', 2, '75cl', 'Vin de garde', 1),
+(3, 'Chateau Lapompe', 1985, 'rouge', 1, '75', 'Essai', 1),
+(4, 'Chateau bidon', 2021, 'rosé', 10, '75', 'A consommer rapidement', 2);
 
 --
 -- Index pour les tables déchargées
@@ -151,7 +154,7 @@ ALTER TABLE `vin`
 -- AUTO_INCREMENT pour la table `region`
 --
 ALTER TABLE `region`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `user`
@@ -163,7 +166,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `vin`
 --
 ALTER TABLE `vin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
