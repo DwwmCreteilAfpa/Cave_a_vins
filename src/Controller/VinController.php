@@ -14,11 +14,15 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class VinController extends AbstractController
 {
-    #[Route('/vin/list', name: 'vin.list')]
-    public function list(VinRepository $vinRepository): Response
+    #[Route('/vin/list/{robe}', name: 'vin.list')]
+    public function list(VinRepository $vinRepository, Request $req): Response
     {
-        //$vins = $vinRepository->findBy([], ['qtt_stock' => 'ASC']);
+       $critere = $req->get('robe');
+       if($critere !== 'all'){
+        $vins = $vinRepository->findBy(['robe' => $critere], ['qtt_stock' => 'ASC']);
+       } else {
         $vins = $vinRepository->findAll();
+       }
 //dump($vins);
         return $this->render('vin/list.html.twig', [
             'vins' => $vins,
