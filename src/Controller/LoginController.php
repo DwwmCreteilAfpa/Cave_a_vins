@@ -53,8 +53,8 @@ class LoginController extends AbstractController
             $psw = $hasher->hashPassword($user, $post['password']);
             $user->setPassword($psw);
             dump($user);
-            $em->persist($user);
-            $em->flush();
+            //$em->persist($user);
+            //$em->flush();
 
             $this->sendEmail($mailer, $user);
 

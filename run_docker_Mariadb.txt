@@ -1,0 +1,1 @@
+docker run --detach --name autre-mariadb --env MARIADB_USER=didier --env MARIADB_PASSWORD=dwwm --env MARIADB_ROOT_PASSWORD=root -p 3306:3306 mariadb:latest

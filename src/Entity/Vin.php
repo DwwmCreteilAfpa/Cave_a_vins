@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\VinRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VinRepository::class)]
 class Vin
@@ -13,9 +14,11 @@ class Vin
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Groups(["vin.read"])]
     #[ORM\Column(type: 'string', length: 50)]
     private $nom;
 
+    #[Groups(["vin.read"])]
     #[ORM\Column(type: 'integer')]
     private $millesime;
 
